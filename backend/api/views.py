@@ -6,11 +6,11 @@ from products.serializers import ProductSerializer
 
 # Create your views here.
 
-@api_view(["GET"])
+@api_view(["POST"])
 def api_home(request, *args, **kwargs):
     """Django Rest Framework API View"""
-    instance = Product.objects.all().order_by("?").first()
-    data = {}
-    if instance:
-        data = ProductSerializer(instance).data
-    return Response(data)
+    serializer = ProductSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        print(serializer.data)
+        return Response(serializer.data)
+    return Response({"invlaid": "Invalid Data"}, status=400)
