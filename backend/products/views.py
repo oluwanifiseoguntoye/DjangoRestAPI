@@ -1,24 +1,24 @@
-from rest_framework import generics, permissions, authentication
+from rest_framework import generics, permissions, authentication, mixins
 from .models import Product
 from .serializers import ProductSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
-from .permissions import IsStaffEditorPermission
-from api.authentication import TokenAuthentication
+from api.mixins import StaffEditorPermissionMixin
 
-class ProductDetailApiView(generics.RetrieveAPIView):
+class ProductDetailApiView(
+    StaffEditorPermissionMixin,
+    generics.RetrieveAPIView
+    ):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-
-class ProductListCreateApiView(generics.ListCreateAPIView):
+    
+class ProductListCreateApiView(
+    StaffEditorPermissionMixin,
+    generics.ListCreateAPIView
+    ):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    authentication_classes = [
-        TokenAuthentication,
-        authentication.SessionAuthentication
-        ]
-    permission_classes = [permissions.IsAdminUser, IsStaffEditorPermission]
 
     def perform_create(self, serializer):
         title = serializer.validated_data.get('title')
@@ -27,7 +27,10 @@ class ProductListCreateApiView(generics.ListCreateAPIView):
             content = title
         serializer.save(content=content)
 
-class ProductUpdateApiView(generics.UpdateAPIView):
+class ProductUpdateApiView(
+    StaffEditorPermissionMixin,
+    generics.UpdateAPIView
+    ):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = 'pk'
@@ -37,9 +40,13 @@ class ProductUpdateApiView(generics.UpdateAPIView):
         if not instance.content:
             instance.content = instance.title
 
-class ProductDeleteApiView(generics.DestroyAPIView):
+class ProductDeleteApiView(
+    StaffEditorPermissionMixin,
+    generics.DestroyAPIView
+    ):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    lookup_field = 'pk'
 
     def perform_destroy(self, instance):
         super().perform_destroy(instance)
