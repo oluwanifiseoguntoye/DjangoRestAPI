@@ -8,5 +8,4 @@ class ProductIndex(AlgoliaIndex):
         'title',
         'content',
         'price',
-        'user',
     ]
