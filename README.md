@@ -1,5 +1,4 @@
 # Django Rest API
-<b> Site link: </b>
 
 
 
