@@ -1,4 +1,4 @@
-# Django Rest Framework
+# Django Rest API
 <b> Site link: </b>
 
 
