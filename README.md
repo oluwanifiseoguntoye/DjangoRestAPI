@@ -24,4 +24,4 @@ The project is intended to serve as a foundation for building more complex web a
   <li>SQLite Database</li>
 </ul>
 
-<i> Note: Please excuse the large amounts of comments in my code, they are used as notes for later reviews <i>
+<i> Note: Please excuse the comments in my code, they are used as notes for later reviews. <i>
