@@ -7,7 +7,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-
+# url patterns for authentication and simplejwt.
+# used tokens for authentication so when a user logs in they're given a token with a set amount of time before it expires and they have to log back in
 urlpatterns = [
     path('auth/', obtain_auth_token),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
